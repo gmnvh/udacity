@@ -7,7 +7,7 @@
 ---
 - Decision Surface:
 
-![Decision Surface](images/2_Decision Surface.png)
+![Decision Surface](images/2_DecisionSurface.png)
 
 ---
 
@@ -33,6 +33,8 @@
 
   - clone repository: https://github.com/udacity/ud120-projects.git
   - run tools/startup.py - This will download the e-mails database
+  - code is implemented in ud120-projects/naive_bayes/nb_author_id.py
 
   ### To-Do
-  - [ ] Run and publish the results using Jupyter
+  - [x] Update wiki page
+  - [x] Run and publish the results using Jupyter
