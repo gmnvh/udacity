@@ -46,8 +46,9 @@ def prettyPicture(clf, X_test, y_test):
 
     plt.savefig("test.png")
     
-    # Adding show function. Tested in the Spyder console. Not sure yet
-    # what is the behavior for norma consoleor jupyter.
+    # Adding show function. Tested in the Spyder console and jupyter.
+    # Not sure yet what is the behavior for norma console.
+    # For jupyter add %matplotlib inline in the first code cell
     plt.show()
     
 import base64
