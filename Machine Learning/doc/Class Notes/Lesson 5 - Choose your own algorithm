@@ -1,0 +1,21 @@
+# Lesson 5 - Choose your own algorithm
+
+This  lesson is a mini project where you have to choose between 3 algorithms to
+study on your own
+
+- k nearest neighboars
+- random forest
+- adaboost
+
+---
+
+### Adaboost
+
+Short for Adaptive Boosting. It is a combination of weak learners.  The individual
+learners can be weak, but as long as the performance of each one is slightly better
+than random guessing, the final model can be proven to converge to a strong learner.
+
+- [x] research/understand algorithms
+- [x] get it running in sklearn
+- [x] run it on the terrain classification data
+- [x] quantify accuracy
