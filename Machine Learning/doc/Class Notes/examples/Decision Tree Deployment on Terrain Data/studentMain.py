@@ -29,7 +29,7 @@ print 'Accuracy: ', accuracy
 
 #### grader code, do not modify below this line
 
-#prettyPicture(clf, features_test, labels_test)
+prettyPicture(clf, features_test, labels_test)
 #output_image("test.png", "png", open("test.png", "rb").read())
 
 ### For L4Q12 - What is the accuracy for min_spamples_split 2 and 50 ?
