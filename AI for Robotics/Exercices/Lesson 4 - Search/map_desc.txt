@@ -1,0 +1,7 @@
+
+[map]
+lat_ref:43.405802
+lng_ref:-83.886641
+zoom_ref:19
+height:7
+width:5
