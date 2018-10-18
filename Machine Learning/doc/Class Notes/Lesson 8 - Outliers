@@ -1,0 +1,11 @@
+# Lesson 8 - Outliers
+
+- What causes outliers
+    - sensor malfunction - ignore
+    - data entry errors - ignore
+    - freak event - pay attention (like fraud detection)
+
+- Rejection
+    1. Train
+    2. Remove points with largest residual errors (~10%)
+    3. Re-Train
