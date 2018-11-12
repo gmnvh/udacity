@@ -1,0 +1,12 @@
+# Localization
+
+ - Missing real life example (maybe a Wi-Fi localization)
+
+# Kalmam Filters
+
+- It was nice to add linear algebra between 1D and 2D Kalam Filters and add the mathematical notation
+
+- Could go deeper on linear algebra
+    - it would not be a bad idea teach the main characteristics of numpy
+
+- What about sensor fusion ?
