@@ -22,6 +22,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DaysBetweenDates.py" />
+    <Compile Include="MySolution.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="unittest\test_my_solution.py" />
+    <Compile Include="unittest\test_solution.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="unittest\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
