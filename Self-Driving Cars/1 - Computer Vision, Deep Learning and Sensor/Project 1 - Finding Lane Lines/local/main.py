@@ -1,6 +1,7 @@
 import cv2
 import math
 import numpy as np
+
 import matplotlib.pyplot as plt
 from moviepy.editor import VideoFileClip
 
@@ -8,11 +9,16 @@ print("Lane Detection")
 
 # Video file
 video_file = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos\solidWhiteRight.mp4'
-video_file = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos\20190206_home_to_cnx_vga.mp4'
-video_file = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos\20190207_cnx_to_home_vga.mp4'
-video_file = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos\challenge.mp4'
+video_file = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos\20190206_home_to_cnx_vga_trimmed.mp4'
+#video_file = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos\20190207_cnx_to_home_vga.mp4'
+#video_file = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos\challenge.mp4'
 
 video_output = r'G:\cnx\projects\udacity\Self-Driving Cars\1 - Computer Vision, Deep Learning and Sensor\Project 1 - Finding Lane Lines\test_videos_output\local_out.mp4'
+
+
+    # Or use BGR2GRAY if you read an image with cv2.imread()
+    #return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
 
 def grayscale(img):
     """Applies the Grayscale transform
@@ -21,16 +27,17 @@ def grayscale(img):
     (assuming your grayscaled image is called 'gray')
     you should call plt.imshow(gray, cmap='gray')"""
     return cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    # Or use BGR2GRAY if you read an image with cv2.imread()
-    #return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    
+
+
 def canny(img, low_threshold, high_threshold):
     """Applies the Canny transform"""
     return cv2.Canny(img, low_threshold, high_threshold)
 
+
 def gaussian_blur(img, kernel_size):
     """Applies a Gaussian Noise kernel"""
     return cv2.GaussianBlur(img, (kernel_size, kernel_size), 0)
+
 
 def region_of_interest(img, vertices):
     """
@@ -56,6 +63,9 @@ def region_of_interest(img, vertices):
     #returning the image only where mask pixels are nonzero
     masked_image = cv2.bitwise_and(img, mask)
     return masked_image
+
+
+
 
 
 def draw_lines_original(img, lines, color=[255, 0, 0], thickness=2):
@@ -132,7 +142,7 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=2):
         low_roi_x1 = int((low_roi_y1 - left_avr_b)/left_avr_slope)
         
         #high_roi_y2 = 330
-        high_roi_y2 = 450
+        high_roi_y2 = 320
         high_roi_x2 = int((high_roi_y2 - left_avr_b)/left_avr_slope)
         
         cv2.line(img, (low_roi_x1, low_roi_y1), (high_roi_x2, high_roi_y2), [0, 255, 0], 4)
@@ -145,10 +155,11 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=2):
         low_roi_y1 = img.shape[0]
         low_roi_x1 = int((low_roi_y1 - right_avr_b)/right_avr_slope)
         
-        high_roi_y2 = 450
+        high_roi_y2 = 320
         high_roi_x2 = int((high_roi_y2 - right_avr_b)/right_avr_slope)
         
         cv2.line(img, (low_roi_x1, low_roi_y1), (high_roi_x2, high_roi_y2), [255, 0, 0], 4)
+
 
 def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     """
@@ -189,7 +200,7 @@ def process_image(image):
     blur = gaussian_blur(gray, 3)
     
     # edge detection
-    edges = canny(blur, 70, 210)
+    edges = canny(blur, 50, 150)
     
     # region of interest
     imshape = edges.shape
@@ -198,10 +209,10 @@ def process_image(image):
     #vertices = np.array([[(0,imshape[0]),(410, 330), (580, 330), (imshape[1],imshape[0])]], dtype=np.int32)
     
     # roi for home to cnx video
-    #vertices = np.array([[(70,410),(320, 320), (360, 320), (620, 410)]], dtype=np.int32)
+    vertices = np.array([[(70,410),(320, 320), (360, 320), (620, 410)]], dtype=np.int32)
     
     # roi for chalenge video
-    vertices = np.array([[(20, 680), (610, 450), (720, 450), (1260, 680)]], dtype=np.int32)
+    #vertices = np.array([[(20, 680), (610, 450), (720, 450), (1260, 680)]], dtype=np.int32)
     
     roi = region_of_interest(edges, vertices)
     
@@ -209,7 +220,7 @@ def process_image(image):
     rho = 2
     theta = np.pi/180
     threshold = 20 #20
-    min_line_length = 60
+    min_line_length = 40
     max_line_gap = 30
     line_image = np.copy(roi)*0 #creating a blank to draw lines on
     
@@ -248,7 +259,7 @@ while(cap.isOpened()):
     cv2.imshow('gray', gray)
     cv2.imshow('edges', edges)
     
-    if cv2.waitKey(100) & 0xFF == ord('q'):
+    if cv2.waitKey(24) & 0xFF == ord('q'):
         break
 
 cap.release()
