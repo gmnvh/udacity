@@ -22,6 +22,7 @@ The goals / steps of this project are the following:
 [image5]: ./examples/augmented_hist.png "Augment Hist"
 [image6]: ./examples/gray.png "Gray"
 [image7]: ./examples/new_signs.png "new signs"
+[image8]: ./examples/visualization_weights_1.png" "Weight Visualization"
 
 
 ## Rubric Points
@@ -39,8 +40,9 @@ You're reading it!.
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-Here are some stastitics about the datase.
+Here are some stastitics about the dataset.
 
+|:--------------      -------:|:-----------:|
 | Number of training examples | 34799       |
 | Number of testing examples  | 12630       |
 | Image data shape            | (32, 32, 3) |
@@ -57,7 +59,7 @@ Here is an exploratory visualization of the dataset.
 
 As part of the exploratory visualization of the dataset, I created the histogram of the training and validation dataset.
 
-It is easy to see that some labels are much more common then other. For example, the database has 2000 ish images of label 2 (Speed limit (50km/h)) and less than 250 images of 19 (Dangerous curve to the left).
+It is easy to see that some labels are much more common then other. For example, the database has 2000 ish images of label 2 (Speed limit (50km/h)) and less than 250 images of label 19 (Dangerous curve to the left).
 
 ![alt text][image2]
 
@@ -83,7 +85,7 @@ Here are some samples of augmented signs.
 
 ![alt text][image4]
 
-Comparing the histogram now we can see the improvement for label that were not so frequent before.
+Comparing the histogram now we can see the improvement for labels that were not so frequent before.
 
 ![alt text][image5]
 
@@ -152,23 +154,11 @@ Different combinations of hyper parameters were tested. See below a table with t
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-Using the same training and evaluation from the LeNet class I was able to get an:
+I am using the same model from the LetNet Lab lesson with just some dropouts added on each layer. With this configuration I was able to get:
+
 * validation set accuracy of 0.961
 * test set accuracy of 0.936
-* my 5 new signs set accuracy of 80%
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+* my 5 new signs set accuracy of 100%
 
 ### Test a Model on New Images
 
@@ -185,14 +175,14 @@ Here are the results of the prediction:
 
 | Image                 |     Prediction                                | 
 |:---------------------:|:---------------------------------------------:| 
-|  Double Curve         | Road work                                     | 
+| Double Curve          | Double Curve                                  | 
 | Speed limit 70Km/h    | Speed limit 70Km/h                            |
 | Stop sign             | Stop sign                                     |
 | Priority road         | Priority road                                 |
 | Go straight or right  | Go straight or right                          |
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. The high accuracy is probably because the images are very clear with low noise and good light.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
@@ -200,11 +190,11 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 
 | Probability           |     Prediction                                |
 |:---------------------:|:---------------------------------------------:|
-| .713                  | Road work                                     |
-| .221                  | Right-of-way at the next intersection         |
-| .049                  | Double curve                                  |
-| .010                  | Road narrows on the right                     |
-| .002                  | General caution                               |
+| .978                  | Double Curve                                  |
+| .012                  | Right-of-way at the next intersection         |
+| .007                  | Road work                                     |
+| .0                    | Dangerous curve to the left                   |
+| .0                    | Turn right ahead                              |
 
 ##### Speed limit 70Km/h
 
@@ -214,7 +204,7 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 | .0                    | Speed limit (30km/h)                          |
 | .0                    | Speed limit (20km/h)                          |
 | .0                    | Roundabout mandatory                          |
-| .0                    | Speed limit (120km/h)                         |
+| .0                    | Keep left                                     |
 
 ##### Stop sign
 
@@ -240,14 +230,19 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 
 | Probability           |     Prediction                                |
 |:---------------------:|:---------------------------------------------:|
-| .580                  | Go straight or right                          |
-| .366                  | End of all speed and passing limits           |
-| .053                  | End of no passing                             |
+| .999                  | Go straight or right                          |
+| .0                    | End of all speed and passing limits           |
+| .0                    | End of no passing                             |
 | .0                    | Children crossing                             |
 | .0                    | End of speed limit (80km/h)                   |
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
+
+
+The picture below is the visualization for the first weight of the neural network. It seems to be focusing on find the border of the signs, working as some kind of edge detection.
+
+![alt text][image8]
 
 
