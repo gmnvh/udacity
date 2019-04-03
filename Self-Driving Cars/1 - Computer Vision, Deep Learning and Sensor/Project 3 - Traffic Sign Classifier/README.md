@@ -21,7 +21,7 @@ The goals / steps of this project are the following:
 [image4]: ./examples/data_augmented.png "Augment"
 [image5]: ./examples/augmented_hist.png "Augment Hist"
 [image6]: ./examples/gray.png "Gray"
-[image7]: ./examples/new_signs.PNG "new signs"
+[image7]: ./examples/new_signs.png "new signs"
 [image8]: ./examples/visualization_weights_1.png" "Weight Visualization"
 
 
