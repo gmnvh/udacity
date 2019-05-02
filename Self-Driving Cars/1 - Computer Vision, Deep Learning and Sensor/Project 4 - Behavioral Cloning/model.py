@@ -2,7 +2,7 @@ import csv
 import cv2
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Flatten, Dense, Lambda, Convolution2D, MaxPooling2D, Cropping2D
+from keras.layers import Dropout, Flatten, Dense, Lambda, Convolution2D, MaxPooling2D, Cropping2D
 
 lines = []
 with open('./data/driving_log.csv') as csvfile:
@@ -61,6 +61,41 @@ print('Number of training points: ', len(images))
 
 X_train = np.array(images)
 y_train = np.array(measurements)
+y_train_before = y_train
+
+from numpy.random import permutation
+perm = permutation(len(X_train))
+X_train = X_train[perm]
+y_train = y_train[perm]
+
+around_zero = ((y_train > -0.01) & (y_train < 0.06)) | ((y_train > -0.32) & (y_train < -0.18)) | ((y_train > 0.18) & (y_train < 0.23))
+
+y_train_1 = y_train[np.where(around_zero == False)]
+X_train_1 = X_train[np.where(around_zero == False)]
+y_train_2 = y_train[np.where(around_zero != False)]
+X_train_2 = X_train[np.where(around_zero != False)]
+
+y_train_3 = y_train_2[0:int(len(y_train_2)/3)]
+X_train_3 = X_train_2[0:int(len(y_train_2)/3)]
+y_train_4 = np.concatenate((y_train_1, y_train_3), axis=None)
+
+X_train_4 = np.concatenate((X_train_1, X_train_3), axis=0)
+
+X_train = X_train_4
+y_train = y_train_4
+
+print(len(X_train), len(y_train))
+assert(len(X_train) == len(y_train))
+
+
+import matplotlib.pyplot as plt
+fig, axs = plt.subplots(1, 2, sharey=True, tight_layout=True)
+
+# We can set the number of bins with the `bins` kwarg
+axs[0].hist(y_train_before, bins=40)
+axs[1].hist(y_train, bins=40)
+
+plt.show()
 
 # NN model
 model = Sequential()
@@ -85,7 +120,9 @@ model.add(Dense(1))
 
 # Compile and train
 model.compile(loss='mse', optimizer='adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=4)
+model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=6)
 
 # Save trainned model
 model.save('model.h5')
+
+print(model.summary())
